@@ -17,7 +17,7 @@ up rows by the integer interval index \verb{1..length(cut_times)},
 then reports counts aligned with the cut-time values.}
 
 \item{count}{One of \code{"at_risk"}, \code{"events_y"} (cumulative),
-\code{"events_y_interval"} (per-interval), or \code{"censored"}.}
+\code{"events_y_interval"} (per-interval), or \code{"censored"} (cumulative).}
 }
 \value{
 A data.frame with \code{k} (= cut time value) plus one

@@ -31,8 +31,8 @@ competing events.
 \seealso{
 Useful links:
 \itemize{
-  \item \url{https://github.com/MourerAlex/CausalSurvival}
-  \item Report bugs at \url{https://github.com/MourerAlex/CausalSurvival/issues}
+  \item \url{https://github.com/MourerAlex/RCausalSurvival}
+  \item Report bugs at \url{https://github.com/MourerAlex/RCausalSurvival/issues}
 }
 
 }

@@ -25,8 +25,9 @@ convention.}
 events occurring exactly in interval \code{k} (the previous
 behavior of \code{"events_y"} before v0.2; kept for hazard-density
 reporting).}
-\item{\code{"censored"}}{Number of subjects censored in interval
-\code{k} (\code{cond_indep_cens == 1} or \code{indep_cens == 1}). Per-interval.}
+\item{\code{"censored"}}{\strong{Cumulative} number of subjects censored up
+to and including interval \code{k} (\code{cond_indep_cens == 1} or
+\code{indep_cens == 1}).}
 }}
 }
 \value{

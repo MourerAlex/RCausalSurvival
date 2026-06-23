@@ -22,8 +22,9 @@
 #'       events occurring exactly in interval `k` (the previous
 #'       behavior of `"events_y"` before v0.2; kept for hazard-density
 #'       reporting).}
-#'     \item{`"censored"`}{Number of subjects censored in interval
-#'       `k` (`cond_indep_cens == 1` or `indep_cens == 1`). Per-interval.}
+#'     \item{`"censored"`}{**Cumulative** number of subjects censored up
+#'       to and including interval `k` (`cond_indep_cens == 1` or
+#'       `indep_cens == 1`).}
 #'   }
 #'
 #' @return A data.frame with column `k` and one column per observed
@@ -73,7 +74,7 @@ causal_risk_table <- function(fit,
 #'   up rows by the integer interval index `1..length(cut_times)`,
 #'   then reports counts aligned with the cut-time values.
 #' @param count One of `"at_risk"`, `"events_y"` (cumulative),
-#'   `"events_y_interval"` (per-interval), or `"censored"`.
+#'   `"events_y_interval"` (per-interval), or `"censored"` (cumulative).
 #' @return A data.frame with `k` (= cut time value) plus one
 #'   per-arm count column.
 #' @family internal
@@ -99,8 +100,10 @@ risk_table_internal <- function(pt_data, id_col, trt_col,
                      sum(rows_a_k$indep_cens, na.rm = TRUE))
       }
     }, integer(1))
-    # Promote per-interval Y-events to cumulative for "events_y".
-    if (count == "events_y") vals <- cumsum(vals)
+    # Promote per-interval counts to cumulative for "events_y" and
+    # "censored" (running total through interval k). "events_y_interval"
+    # stays per-interval; "at_risk" is a snapshot.
+    if (count %in% c("events_y", "censored")) vals <- cumsum(vals)
     result[[col_name]] <- vals
   }
   result

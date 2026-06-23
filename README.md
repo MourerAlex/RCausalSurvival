@@ -20,17 +20,15 @@ remotes::install_github("MourerAlex/RCausalSurvival")
 ```r
 library(CausalSurvival)
 
-# --- Synthetic data ---------------------------------------------------------
-set.seed(42); n <- 200
-df <- data.frame(id = seq_len(n), L1 = rnorm(n), L2 = rbinom(n, 1, 0.4))
-df$A      <- rbinom(n, 1, plogis(-0.2 + 0.3 * df$L1 + 0.5 * df$L2))
-df$lambda <- plogis(-2 + 0.3 * df$A + 0.2 * df$L1 + 0.4 * df$L2)
-df$time   <- pmin(rgeom(n, df$lambda) + 1L, 10L)
-df$status <- as.integer(df$time < 10L)
+# --- Real data: VA lung-cancer trial (survival::veteran) --------------------
+vet <- survival::veteran
+vet$id <- seq_len(nrow(vet))
+vet$A  <- vet$trt - 1L     # 0 = standard, 1 = test chemotherapy
+# status: 1 = death, 0 = censored | covariates: karno, age, prior
 
-pt <- to_person_time(df, id = "id", time = "time", status = "status",
-                     treatment = "A", covariates = c("L1", "L2"),
-                     cut_points = 20)
+pt <- to_person_time(vet, id = "id", time = "time", status = "status",
+                     treatment = "A", covariates = c("karno", "age", "prior"),
+                     cut_points = 12)
 
 # --- g-formula --------------------------------------------------------------
 fit_g <- causal_survival(pt, method = "gformula")
