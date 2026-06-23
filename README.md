@@ -1,10 +1,10 @@
 # CausalSurvival
 
-> **Status**: pre-implementation. Skeleton only. See `dev/CAUSAL_SURVIVAL_SPEC.md` in the [CausalCompetingRisks](https://github.com/MourerAlex/CausalCompetingRisks) repository for the full specification.
+> **Status**: pre-implementation, under active developement.
 
-R package for causal inference on single-event survival outcomes, using discrete-time pooled logistic regression. Provides parametric g-formula and inverse probability weighting estimators for cumulative incidence under static, baseline-only treatment regimes, with bootstrap confidence intervals and identifying-assumption accessors.
+R package for causal inference on (single-event) overall survival outcomes (all-cause death), using discrete-time pooled logistic regression. Provides parametric g-formula and inverse probability weighting estimators for cumulative incidence under static, baseline-only treatment regimes, with bootstrap confidence intervals and identifying-assumption accessors.
 
-Designed as the foundation of a two-package ecosystem: [CausalCompetingRisks](https://github.com/MourerAlex/CausalCompetingRisks) extends to competing events via the separable-effects framework.
+Designed as the foundation of a two-package ecosystem: [CausalCompetingRisks](https://github.com/MourerAlex/RCausalCompetingRisks) extends to competing events via the separable-effects framework.
 
 ## Installation
 
@@ -86,9 +86,9 @@ plot(causal_risk(fit_g),
 
 See `vignette("getting-started")` once available.
 
-## Notes & gotchas
+## Notes 
 
-Short answers to the questions that come up most. A full vignette is planned.
+A full vignette is planned.
 
 **Two kinds of censoring — which is which?**
 `to_person_time()` splits censoring into two mechanisms, labelled per subject
@@ -110,8 +110,7 @@ administrative reason — administrative censoring is the typical example of
 With `ipcw = TRUE` the package fits the `cond_indep_cens` hazard model. If your
 data have no conditionally-independent censoring inside `(0, T_max]` (e.g. every
 censored subject is administratively truncated at `T_max`), that model sees no
-events, predicts ~0 hazard, and the IPCW collapses to 1. Not a bug — it reflects
-that there was nothing for IPCW to correct.
+events.
 
 **What does `cut_points` do?**
 Discretizes follow-up `(0, T_max]` into intervals. `NULL` → 12 equal-width
