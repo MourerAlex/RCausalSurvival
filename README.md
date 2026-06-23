@@ -87,7 +87,7 @@ See `vignette("getting-started")` once available.
 
 A full vignette is planned.
 
-**Two kinds of censoring — which is which?**
+**Two kinds of censoring: which is which?**
 `to_person_time()` splits censoring into two mechanisms, labelled per subject
 via the `ipcw` argument (a logical vector; `TRUE` = the first kind):
 
