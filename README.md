@@ -50,7 +50,7 @@ print(causal_risk(fit_g, "incidence"))
 print(causal_contrast(fit_g))  # emits the loud ci = NULL warning
 
 # --- Bootstrap + contrast with CI -------------------------------------------
-boot_g <- bootstrap(fit_g, n_boot = 500, alpha = 0.05, seed = 1)
+boot_g <- bootstrap(fit_g, n_boot = 50, alpha = 0.05, seed = 1)
 print(boot_g)
 print(causal_contrast(fit_g, ci = boot_g))
 summary(fit_g, ci = boot_g)
@@ -63,19 +63,18 @@ print(causal_risk_table(fit_g, count = "at_risk"))
 # bootstrap(fit_g) stores g-formula CIFs, so using boot_g with fit_i's plot
 # would silently show g-formula bands on an IPW curve.
 # plot.1 bootstrap for each fit
-boot_i <- bootstrap(fit_i, n_boot = 500, alpha = 0.05, seed = 1)
-boot_m <- bootstrap(fit_m, n_boot = 500, alpha = 0.05, seed = 1)
+boot_i <- bootstrap(fit_i, n_boot = 50, alpha = 0.05, seed = 1)
+boot_m <- bootstrap(fit_m, n_boot = 50, alpha = 0.05, seed = 1)
 
 # plot.2 different fits plots with different options
 plot(causal_risk(fit_g, "incidence", ci = boot_g), risk_table = "at_risk")
-plot(causal_risk(fit_i, "survival", ci = boot_i), risk_table = "events_y")
 plot(causal_risk(fit_m, "survival", ci = boot_m))
 
 # plot.3 contrast plot
 plot(causal_contrast(fit_g, ci = boot_g))
 
 # plot.4 fit plot with stacked tables and tables only
-plot(causal_risk(fit_g),
+plot(causal_risk(fit_g, ci = boot_g),
      risk_table = c("at_risk", "events_y", "censored"))
 plot(causal_risk(fit_g),
      risk_table = c("at_risk", "events_y", "censored"),
