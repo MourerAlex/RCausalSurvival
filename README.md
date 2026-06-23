@@ -12,7 +12,7 @@ Not yet on CRAN. Development version:
 
 ```r
 # install.packages("remotes")
-remotes::install_github("MourerAlex/CausalSurvival")
+remotes::install_github("MourerAlex/RCausalSurvival")
 ```
 
 ## Usage
